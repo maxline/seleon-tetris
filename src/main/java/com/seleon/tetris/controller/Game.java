@@ -6,7 +6,8 @@ import com.seleon.tetris.model.Figure;
  * @author Sergey Mikhluk.
  */
 public class Game {
-    private Figure figure = new Figure();
+    private static Game instance;
+    private Figure figure;
     private final int SHOW_DELAY = 400; // delay for animation
     private boolean gameOver = false;
 
@@ -15,5 +16,14 @@ public class Game {
 
     public void go() {
         figure = new Figure();
+        figure.place();
+    }
+
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
     }
 }

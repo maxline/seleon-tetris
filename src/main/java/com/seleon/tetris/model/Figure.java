@@ -1,5 +1,7 @@
 package com.seleon.tetris.model;
 
+import com.seleon.tetris.view.TetrisWindow;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -18,11 +20,12 @@ public class Figure {
             {{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 0xf00000}}  // Z
     };
 
+    TetrisBoard tetrisBoard = TetrisBoard.getInstance();
     private int[][] shape = new int[4][4];
     private int type, size, color;
 
-    private int x = 3; //todo
-    private int y = 0;
+    private int figureX = 3; //todo
+    private int figureY = 1;
 
     public Figure() {
         Random random = new Random(); //todo
@@ -30,25 +33,32 @@ public class Figure {
         size = SHAPES[type][4][0];
         color = SHAPES[type][4][1];
         if (size == 4) {
-            y = -1;
+            //figureY = -1; todo
         }
         for (int i = 0; i < size; i++)
             System.arraycopy(SHAPES[type][i], 0, shape[i], 0, SHAPES[type][i].length);
     }
 
 
-    void move(int direction) {
+    public void move(int direction) {
         //if (!isTouchWall(direction)) {
         // int dx = direction - 38; // LEFT = -1, RIGHT = 1
         int dx = direction; // LEFT = -1, RIGHT = 1
         //for (Block block : figure) block.setX(block.getX() + dx);
-        x += dx;
+        figureX += dx;
     }
     //}
 
-    void paint(Graphics g, int color) {
-        g.setColor(new Color(color));
-        //g.drawRoundRect(x*BLOCK_SIZE+1, y*BLOCK_SIZE+1, BLOCK_SIZE-2, BLOCK_SIZE-2, ARC_RADIUS, ARC_RADIUS);
+    public void place() {
+        //g.setColor(new Color(color)); todo
+
+        for (int y = 0;  y < shape.length; y++) {
+            for (int x = 0; x < shape[0].length; x++) {
+                tetrisBoard.setCellValue(figureY + y, figureX + x, shape[y][x]);
+            }
+        }
+        TetrisWindow.getInstance().repaint();
+        //g.drawRoundRect(figureX*BLOCK_SIZE+1, figureY*BLOCK_SIZE+1, BLOCK_SIZE-2, BLOCK_SIZE-2, ARC_RADIUS, ARC_RADIUS);
     }
 
 }

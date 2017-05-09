@@ -13,9 +13,15 @@ public class KeyActionListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        Game game = Game.getInstance();
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             TetrisBoard.getInstance().decrementX(1);
         }
-        TetrisWindow.getInstance().repaint();
+
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            game.go();
+        }
+
+        TetrisWindow.getInstance().repaint(); //todo перенести
     }
 }
