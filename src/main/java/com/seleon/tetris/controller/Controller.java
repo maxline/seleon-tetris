@@ -1,21 +1,18 @@
 package com.seleon.tetris.controller;
 
-import com.seleon.tetris.view.TetrisWindow;
+import com.seleon.tetris.view.MinePanel;
 
 /**
  * @author Sergey Mikhluk.
  */
 public class Controller {
 
-    private TetrisWindow tetrisWindow;
-
-    public Controller(TetrisWindow tetrisWindow) {
-        this.tetrisWindow = tetrisWindow;
+    public Controller() {
         initControllers();
     }
 
     private void initControllers() {
-        tetrisWindow.addBoardMouseListener(new MouseActionListener(tetrisWindow));
-        tetrisWindow.addBoardKeyListener(new KeyActionListener(tetrisWindow));
+        MinePanel.getInstance().addBoardMouseListener(new MouseActionListener());
+        MinePanel.getInstance().addBoardKeyListener(new KeyActionListener());
     }
 }

@@ -11,17 +11,11 @@ import java.awt.event.KeyEvent;
  */
 public class KeyActionListener extends KeyAdapter {
 
-    private TetrisWindow tetrisWindow;
-
-    public KeyActionListener(TetrisWindow tetrisWindow) {
-        this.tetrisWindow = tetrisWindow;
-    }
-
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             TetrisBoard.getInstance().decrementX(1);
         }
-        tetrisWindow.repaint();
+        TetrisWindow.getInstance().repaint();
     }
 }

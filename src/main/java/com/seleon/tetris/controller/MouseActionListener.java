@@ -11,15 +11,9 @@ import java.awt.event.MouseEvent;
  */
 public class MouseActionListener extends MouseAdapter {
 
-    private TetrisWindow tetrisWindow;
-
-    public MouseActionListener(TetrisWindow tetrisWindow) {
-        this.tetrisWindow = tetrisWindow;
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         TetrisBoard.getInstance().onClick(e.getPoint());
-        tetrisWindow.repaint();
+        TetrisWindow.getInstance().repaint();
     }
 }

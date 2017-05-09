@@ -8,6 +8,7 @@ import com.seleon.tetris.view.TetrisWindow;
  */
 public class Run {
     public static void main(String[] args) {
-        new Controller(new TetrisWindow());
+        TetrisWindow.getInstance();
+        new Controller();
     }
 }
