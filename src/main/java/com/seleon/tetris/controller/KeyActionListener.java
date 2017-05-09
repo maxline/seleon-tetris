@@ -1,7 +1,6 @@
 package com.seleon.tetris.controller;
 
-import com.seleon.tetris.model.TetrisBoard;
-import com.seleon.tetris.view.TetrisWindow;
+import com.seleon.tetris.model.Game;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,14 +13,20 @@ public class KeyActionListener extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         Game game = Game.getInstance();
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            TetrisBoard.getInstance().decrementX(1);
-        }
 
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            game.go();
+        switch (e.getKeyCode()) {
+            case (KeyEvent.VK_LEFT):
+                game.moveLeft();
+                break;
+            case (KeyEvent.VK_RIGHT):
+                game.moveRight();
+                break;
+            case (KeyEvent.VK_DOWN):
+                game.moveDown();
+                break;
+            case (KeyEvent.VK_SPACE):
+                game.go();
+                break;
         }
-
-        TetrisWindow.getInstance().repaint(); //todo перенести
     }
 }

@@ -1,8 +1,5 @@
 package com.seleon.tetris.model;
 
-import com.seleon.tetris.view.TetrisWindow;
-
-import java.awt.*;
 import java.util.Random;
 
 /**
@@ -20,7 +17,7 @@ public class Figure {
             {{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 0xf00000}}  // Z
     };
 
-    TetrisBoard tetrisBoard = TetrisBoard.getInstance();
+    private TetrisBoard tetrisBoard = TetrisBoard.getInstance();
     private int[][] shape = new int[4][4];
     private int type, size, color;
 
@@ -49,16 +46,27 @@ public class Figure {
     }
     //}
 
-    public void place() {
-        //g.setColor(new Color(color)); todo
+//    public void place() {
+//        for (int y = 0; y < shape.length; y++) {
+//            for (int x = 0; x < shape[0].length; x++) {
+//                tetrisBoard.setCellValue(figureY + y, figureX + x, shape[y][x]);
+//            }
+//        }
+//    }
 
-        for (int y = 0;  y < shape.length; y++) {
-            for (int x = 0; x < shape[0].length; x++) {
-                tetrisBoard.setCellValue(figureY + y, figureX + x, shape[y][x]);
-            }
-        }
-        TetrisWindow.getInstance().repaint();
-        //g.drawRoundRect(figureX*BLOCK_SIZE+1, figureY*BLOCK_SIZE+1, BLOCK_SIZE-2, BLOCK_SIZE-2, ARC_RADIUS, ARC_RADIUS);
+    public void down() {
+        figureY++;
     }
 
+    public int[][] getShape() {
+        return shape;
+    }
+
+    public int getFigureX() {
+        return figureX;
+    }
+
+    public int getFigureY() {
+        return figureY;
+    }
 }
