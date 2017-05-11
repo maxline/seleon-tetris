@@ -1,7 +1,5 @@
 package com.seleon.tetris.model;
 
-import com.seleon.tetris.view.TetrisWindow;
-
 import java.awt.*;
 
 /**
