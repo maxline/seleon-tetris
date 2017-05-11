@@ -69,10 +69,6 @@ public class MinePanel extends JPanel {
                 }
             }
         }
-
-        graphics.drawOval(tetrisBoard.getX(), tetrisBoard.getY(), BLOCK_SIZE - 1, BLOCK_SIZE - 1);
-        System.out.println(tetrisBoard.getX());
-        System.out.println(tetrisBoard.getY());
     }
 
     public void addBoardKeyListener(KeyActionListener keyActionListener) {
