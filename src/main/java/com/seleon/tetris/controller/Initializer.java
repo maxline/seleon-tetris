@@ -1,6 +1,5 @@
 package com.seleon.tetris.controller;
 
-import com.seleon.tetris.view.game.BoardPanel;
 import com.seleon.tetris.view.game.GameWindow;
 
 /**
@@ -13,7 +12,7 @@ public class Initializer {
     }
 
     private void initControllers() {
-        BoardPanel.getInstance().addBoardMouseListener(new MouseActionListener(GameWindow.getInstance()));
-        BoardPanel.getInstance().addBoardKeyListener(new KeyController(GameWindow.getInstance()));
+        GameWindow.getInstance().getBoardPanel().addBoardMouseListener(new MouseActionListener(GameWindow.getInstance()));
+        GameWindow.getInstance().getBoardPanel().addBoardKeyListener(new KeyController(GameWindow.getInstance()));
     }
 }

@@ -17,9 +17,8 @@ import static com.seleon.tetris.config.Config.*;
 public class BoardPanel extends JPanel {
     private static final int BOARD_PANEL_WIDTH = BOARD_WIDTH * BLOCK_SIZE;
     private static final int BOARD_PANEL_HEIGHT = BOARD_HEIGHT * BLOCK_SIZE;
-    private static BoardPanel instance;
 
-    private BoardPanel() {
+    BoardPanel() {
         setOpaque(true);
         setFocusable(true);
         setBorder(BorderFactory.createLineBorder(Color.red));
@@ -27,12 +26,6 @@ public class BoardPanel extends JPanel {
         setSize(BOARD_PANEL_WIDTH, BOARD_PANEL_HEIGHT);
     }
 
-    public static BoardPanel getInstance() {
-        if (instance == null) {
-            instance = new BoardPanel();
-        }
-        return instance;
-    }
 
     @Override
     protected void paintComponent(Graphics graphics) {
