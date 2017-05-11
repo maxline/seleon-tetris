@@ -46,6 +46,9 @@ public class MinePanel extends JPanel {
 
     private void drawFigure(Graphics graphics, Game game) {
         Figure figure = game.getFigure();
+        if (figure == null || figure.getShape() == null) {
+            return;
+        }
 
         for (int y = 0; y < figure.getShape().length; y++) {
             for (int x = 0; x < figure.getShape()[0].length; x++) {
