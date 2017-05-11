@@ -10,7 +10,11 @@ import java.awt.event.MouseEvent;
  * @author Sergey Mikhluk.
  */
 public class MouseActionListener extends MouseAdapter {
-    private GameWindow gameWindow = GameWindow.getInstance(); //todo переписать через dependency injection в конструкторе
+    private GameWindow gameWindow;
+
+    public MouseActionListener(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {

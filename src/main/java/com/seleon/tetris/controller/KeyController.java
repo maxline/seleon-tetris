@@ -8,8 +8,12 @@ import java.awt.event.KeyEvent;
 /**
  * @author Sergey Mikhluk.
  */
-public class KeyActionListener extends KeyAdapter {
-    private GameWindow gameWindow = GameWindow.getInstance(); //todo переписать через dependency injection в конструкторе
+public class KeyController extends KeyAdapter {
+    private GameWindow gameWindow;
+
+    public KeyController(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
