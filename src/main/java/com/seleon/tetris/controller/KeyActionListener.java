@@ -1,6 +1,6 @@
 package com.seleon.tetris.controller;
 
-import com.seleon.tetris.view.TetrisWindow;
+import com.seleon.tetris.view.game.GameWindow;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
  * @author Sergey Mikhluk.
  */
 public class KeyActionListener extends KeyAdapter {
-    private TetrisWindow tetrisWindow = TetrisWindow.getInstance(); //todo переписать через dependency injection в конструкторе
+    private GameWindow gameWindow = GameWindow.getInstance(); //todo переписать через dependency injection в конструкторе
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -18,6 +18,6 @@ public class KeyActionListener extends KeyAdapter {
     }
 
     private void windowRepaint() {
-        tetrisWindow.repaint();
+        gameWindow.repaint();
     }
 }

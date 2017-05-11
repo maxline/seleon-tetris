@@ -1,6 +1,6 @@
 package com.seleon.tetris.controller;
 
-import com.seleon.tetris.view.MinePanel;
+import com.seleon.tetris.view.game.BoardPanel;
 
 /**
  * @author Sergey Mikhluk.
@@ -12,7 +12,7 @@ public class Controller {
     }
 
     private void initControllers() {
-        MinePanel.getInstance().addBoardMouseListener(new MouseActionListener());
-        MinePanel.getInstance().addBoardKeyListener(new KeyActionListener());
+        BoardPanel.getInstance().addBoardMouseListener(new MouseActionListener());
+        BoardPanel.getInstance().addBoardKeyListener(new KeyActionListener());
     }
 }

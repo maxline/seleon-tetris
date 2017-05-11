@@ -17,7 +17,7 @@ public class Figure {
             {{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 0xf00000}}  // Z
     };
 
-    private TetrisBoard tetrisBoard = TetrisBoard.getInstance();
+    private Board board = Board.getInstance();
     private int[][] shape = new int[4][4];
     private int type, size, color;
 
@@ -49,7 +49,7 @@ public class Figure {
 //    public void place() {
 //        for (int y = 0; y < shape.length; y++) {
 //            for (int x = 0; x < shape[0].length; x++) {
-//                tetrisBoard.setCellValue(figureY + y, figureX + x, shape[y][x]);
+//                board.setCellValue(figureY + y, figureX + x, shape[y][x]);
 //            }
 //        }
 //    }

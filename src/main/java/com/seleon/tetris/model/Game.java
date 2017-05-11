@@ -1,7 +1,5 @@
 package com.seleon.tetris.model;
 
-import java.awt.*;
-
 /**
  * @author Sergey Mikhluk.
  */
@@ -9,12 +7,12 @@ public class Game {
     private static Game instance;
     private final int SHOW_DELAY = 400; // delay for animation
 
-    private TetrisBoard tetrisBoard;
+    private Board board;
     private Figure figure;
     private boolean gameOver = false;
 
     private Game() {
-        tetrisBoard = TetrisBoard.getInstance(); //todo переписать через dependency injection в конструкторе
+        board = Board.getInstance(); //todo переписать через dependency injection в конструкторе
     }
 
     public static Game getInstance() {
@@ -41,8 +39,8 @@ public class Game {
     }
 
     //Getters and setters
-    public TetrisBoard getTetrisBoard() {
-        return tetrisBoard;
+    public Board getBoard() {
+        return board;
     }
 
     public Figure getFigure() {

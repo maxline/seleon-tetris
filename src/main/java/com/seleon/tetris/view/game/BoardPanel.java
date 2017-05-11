@@ -1,10 +1,10 @@
-package com.seleon.tetris.view;
+package com.seleon.tetris.view.game;
 
 import com.seleon.tetris.controller.KeyActionListener;
 import com.seleon.tetris.controller.MouseActionListener;
 import com.seleon.tetris.model.Figure;
 import com.seleon.tetris.model.Game;
-import com.seleon.tetris.model.TetrisBoard;
+import com.seleon.tetris.model.Board;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,22 +14,22 @@ import static com.seleon.tetris.config.Config.*;
 /**
  * @author Sergey Mikhluk.
  */
-public class MinePanel extends JPanel {
-    private static final int MINE_PANEL_WIDTH = BOARD_WIDTH * BLOCK_SIZE;
-    private static final int MINE_PANEL_HEIGHT = BOARD_HEIGHT * BLOCK_SIZE;
-    private static MinePanel instance;
+public class BoardPanel extends JPanel {
+    private static final int BOARD_PANEL_WIDTH = BOARD_WIDTH * BLOCK_SIZE;
+    private static final int BOARD_PANEL_HEIGHT = BOARD_HEIGHT * BLOCK_SIZE;
+    private static BoardPanel instance;
 
-    private MinePanel() {
+    private BoardPanel() {
         setOpaque(true);
         setFocusable(true);
         setBorder(BorderFactory.createLineBorder(Color.red));
         setBackground(Color.BLACK);
-        setSize(MINE_PANEL_WIDTH, MINE_PANEL_HEIGHT);
+        setSize(BOARD_PANEL_WIDTH, BOARD_PANEL_HEIGHT);
     }
 
-    public static MinePanel getInstance() {
+    public static BoardPanel getInstance() {
         if (instance == null) {
-            instance = new MinePanel();
+            instance = new BoardPanel();
         }
         return instance;
     }
@@ -60,11 +60,11 @@ public class MinePanel extends JPanel {
     }
 
     private void drawBoard(Graphics graphics, Game game) {
-        TetrisBoard tetrisBoard = game.getTetrisBoard();
+        Board board = game.getBoard();
 
-        for (int y = 0; y < tetrisBoard.getBoard().length; y++) {
-            for (int x = 0; x < tetrisBoard.getBoard()[0].length; x++) {
-                if (tetrisBoard.getBoard()[y][x] > 0) {
+        for (int y = 0; y < board.getBoard().length; y++) {
+            for (int x = 0; x < board.getBoard()[0].length; x++) {
+                if (board.getBoard()[y][x] > 0) {
                     graphics.drawRoundRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1, ARC_WIDTH, ARC_HEIGHT);
                 }
             }

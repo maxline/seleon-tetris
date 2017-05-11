@@ -2,18 +2,16 @@ package com.seleon.tetris.model;
 
 import com.seleon.tetris.config.Config;
 
-import java.awt.*;
-
 /**
  * @author Sergey Mikhluk.
  */
-public class TetrisBoard {
+public class Board {
 
-    private static TetrisBoard instance;
+    private static Board instance;
 
     private int[][] board = new int[Config.BOARD_HEIGHT][Config.BOARD_WIDTH];
 
-    private TetrisBoard() {
+    private Board() {
 //        board[0][0] = 1; //todo
 //        board[1][0] = 1;
 //        board[2][1] = 1;
@@ -21,9 +19,9 @@ public class TetrisBoard {
 //        board[17][9] = 1;
     }
 
-    public static TetrisBoard getInstance() {
+    public static Board getInstance() {
         if (instance == null) {
-            instance = new TetrisBoard();
+            instance = new Board();
         }
         return instance;
     }
