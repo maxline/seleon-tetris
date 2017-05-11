@@ -40,11 +40,6 @@ public class Game {
         figure.down();
     }
 
-    public void onClick(Point point) {
-        tetrisBoard.onClick(point);
-    }
-
-
     //Getters and setters
     public TetrisBoard getTetrisBoard() {
         return tetrisBoard;
