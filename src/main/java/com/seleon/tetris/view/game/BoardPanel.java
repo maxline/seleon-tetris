@@ -1,6 +1,6 @@
 package com.seleon.tetris.view.game;
 
-import com.seleon.tetris.controller.KeyController;
+import com.seleon.tetris.controller.KeyListener;
 import com.seleon.tetris.controller.MouseActionListener;
 import com.seleon.tetris.model.Figure;
 import com.seleon.tetris.model.Game;
@@ -64,8 +64,8 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    public void addBoardKeyListener(KeyController keyController) {
-        addKeyListener(keyController);
+    public void addBoardKeyListener(KeyListener keyListener) {
+        addKeyListener(keyListener);
     }
 
     public void addBoardMouseListener(MouseActionListener mouseActionListener) {

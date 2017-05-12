@@ -11,9 +11,11 @@ import java.awt.event.MouseEvent;
  */
 public class MouseActionListener extends MouseAdapter {
     private GameWindow gameWindow;
+    private Controller controller;
 
-    public MouseActionListener(GameWindow gameWindow) {
+    public MouseActionListener(GameWindow gameWindow, Controller controller) {
         this.gameWindow = gameWindow;
+        this.controller = controller;
     }
 
     @Override

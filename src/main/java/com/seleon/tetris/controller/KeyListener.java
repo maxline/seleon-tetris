@@ -8,16 +8,18 @@ import java.awt.event.KeyEvent;
 /**
  * @author Sergey Mikhluk.
  */
-public class KeyController extends KeyAdapter {
+public class KeyListener extends KeyAdapter {
     private GameWindow gameWindow;
+    private Controller controller;
 
-    public KeyController(GameWindow gameWindow) {
+    public KeyListener(GameWindow gameWindow, Controller controller) {
         this.gameWindow = gameWindow;
+        this.controller = controller;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        ControllerHelper.getInstance().getCommand(e.getKeyCode()).execute();
+        controller.getCommand(e.getKeyCode()).execute();
         windowRepaint();
     }
 
