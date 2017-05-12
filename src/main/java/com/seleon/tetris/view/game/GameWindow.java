@@ -11,21 +11,13 @@ import static com.seleon.tetris.config.Config.*;
 public class GameWindow extends JFrame {
     private static final int MAIN_WINDOW_WIDTH = BOARD_WIDTH * BLOCK_SIZE + 8;
     private static final int MAIN_WINDOW_HEIGHT = BOARD_HEIGHT * BLOCK_SIZE + 30;
-    private static GameWindow instance;
     private BoardPanel boardPanel = new BoardPanel();
 
-    private GameWindow() {
+    public GameWindow() {
         super(GAME_WINDOW_TITLE);
 
         createMainFrame();
         display();
-    }
-
-    public static GameWindow getInstance() {
-        if (instance == null) {
-            instance = new GameWindow();
-        }
-        return instance;
     }
 
     private void createMainFrame() {
