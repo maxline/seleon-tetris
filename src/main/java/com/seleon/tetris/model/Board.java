@@ -15,8 +15,11 @@ public class Board {
 //        board[0][0] = 1; //todo
 //        board[1][0] = 1;
 //        board[2][1] = 1;
-//        board[17][1] = 1;
+        board[13][4] = 1;
 //        board[17][9] = 1;
+        for(int col=0; col<Config.BOARD_WIDTH; col++){
+            board[Config.BOARD_HEIGHT-1][col]=1;
+        }
     }
 
     public static Board getInstance() {

@@ -9,7 +9,9 @@ import com.seleon.tetris.view.game.GameWindow;
  */
 public class Run {
     public static void main(String[] args) {
-        new Controller(new GameWindow());
+        GameWindow gameWindow = new GameWindow();
+        new Controller(gameWindow);
+        Game.getInstance().setGameWindow(gameWindow);
         Game.getInstance().go();
     }
 }

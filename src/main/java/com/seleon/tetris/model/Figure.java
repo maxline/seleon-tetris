@@ -7,6 +7,8 @@ import java.util.Random;
  */
 public class Figure {
 
+    public static final int HEIGHT = 4;
+    public static final int WIDTH = 4;
     private final int[][][] SHAPES = {
             {{0, 0, 0, 0}, {1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {4, 0x00f0f0}}, // I
             {{0, 0, 0, 0}, {0, 1, 1, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {4, 0xf0f000}}, // O
@@ -18,7 +20,7 @@ public class Figure {
     };
 
     private Board board = Board.getInstance();
-    private int[][] shape = new int[4][4];
+    private int[][] shape = new int[HEIGHT][WIDTH];
     private int type, size, color;
 
     private int figureX = 3; //todo
@@ -54,6 +56,17 @@ public class Figure {
 //        }
 //    }
 
+    public int getMaxY(){
+        for(int row = getHeight()-1; row>=0;row--){
+            for(int col = 0; col< getWidth();col++){
+                if (shape[row][col]>0){
+                    return row;
+                }
+            }
+        }
+        return 0;
+    }
+
     public void down() {
         figureY++;
     }
@@ -66,7 +79,23 @@ public class Figure {
         return figureX;
     }
 
+    public void setFigureX(int figureX) {
+        this.figureX = figureX;
+    }
+
     public int getFigureY() {
         return figureY;
+    }
+
+    public void setFigureY(int figureY) {
+        this.figureY = figureY;
+    }
+
+    public int getWidth() {
+        return shape.length;
+    }
+
+    public int getHeight() {
+        return shape[0].length;
     }
 }
