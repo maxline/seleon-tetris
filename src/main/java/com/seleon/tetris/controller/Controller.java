@@ -17,7 +17,7 @@ public class Controller {
         commands.put(KeyEvent.VK_LEFT, new LeftCommand());
         commands.put(KeyEvent.VK_RIGHT, new RightCommand());
         commands.put(KeyEvent.VK_DOWN, new DownCommand());
-        commands.put(KeyEvent.VK_SPACE, new SpaceCommand());
+        commands.put(KeyEvent.VK_SPACE, new FallCommand());
 
         initListeners(gameWindow);
     }

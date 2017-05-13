@@ -126,4 +126,11 @@ public class Game {
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
     }
+
+    public void fall() {
+        while(!isTouchGround()){
+            moveDown();
+        }
+        liveOnTheGround();
+    }
 }
