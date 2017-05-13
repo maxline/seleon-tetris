@@ -50,6 +50,9 @@ public class Game {
 
     private void liveOnTheGround() {
         System.out.println("live it on the ground");
+        for(Block block: figure.getBlocks()){
+            board.setCellValue(block.getY(), block.getX(), 1);
+        }
 
     }
 
