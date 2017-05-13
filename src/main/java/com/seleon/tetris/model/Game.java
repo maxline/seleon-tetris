@@ -3,6 +3,7 @@ package com.seleon.tetris.model;
 import com.seleon.tetris.view.game.GameWindow;
 
 import static com.seleon.tetris.config.Config.CLOCK_WISE;
+import static com.seleon.tetris.config.Config.SCORES;
 
 /**
  * @author Sergey Mikhluk.
@@ -15,6 +16,7 @@ public class Game {
     private Figure figure;
     private GameWindow gameWindow;
     private boolean gameOver = false;
+    private int gameScore;
 
     private Game() {
         board = Board.getInstance(); //todo переписать через dependency injection в конструкторе
@@ -33,13 +35,14 @@ public class Game {
         for (int i = 0; i < 25; i++) {
             figure = new Figure();
             while (!gameOver) {
+                checkFilling();
                 try {
                     Thread.sleep(SHOW_DELAY);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 if (isTouchGround()) {
-                    liveOnTheGround();
+                    leaveOnTheGround();
                     break;
                 }
                 moveDown();
@@ -51,7 +54,7 @@ public class Game {
         }
     }
 
-    private void liveOnTheGround() {
+    private void leaveOnTheGround() {
         System.out.println("live it on the ground");
         for (Block block : figure.getBlocks()) {
             board.setCellValue(block.getY(), block.getX(), 1);
@@ -140,7 +143,25 @@ public class Game {
         while (!isTouchGround()) {
             moveDown();
         }
-        liveOnTheGround();
+        leaveOnTheGround();
+    }
+    void checkFilling() { // check filling rows
+        int row = board.getHeight() - 2; //todo -1
+        int countFillRows = 0;
+        while (row > 0) {
+            int filled = 1;
+            for (int col = 0; col < board.getWidth(); col++)
+                filled *= Integer.signum(board.getBoard()[row][col]);
+            if (filled > 0) {
+                countFillRows++;
+                for (int i = row; i > 0; i--) System.arraycopy(board.getBoard()[i-1], 0, board.getBoard()[i], 0, board.getWidth());
+            } else
+                row--;
+        }
+        if (countFillRows > 0) {
+            gameScore += SCORES[countFillRows - 1];
+            System.out.println(gameScore);
+        }
     }
 
     //Getters and setters

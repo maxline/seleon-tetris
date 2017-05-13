@@ -11,4 +11,5 @@ public class Config {
     public static final int BOARD_HEIGHT = 18;
     public static final int BOARD_WIDTH = 10;
     public static final boolean CLOCK_WISE = true;
+    public static final int[] SCORES = {100, 300, 700, 1500};
 }
