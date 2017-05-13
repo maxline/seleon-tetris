@@ -15,8 +15,8 @@ public class Board {
 //        board[0][0] = 1; //todo
         board[5][1] = 1;
         board[6][1] = 1;
+        board[14][8] = 1;
         board[13][4] = 1;
-        board[7][8] = 1;
         for (int col = 0; col < Config.BOARD_WIDTH; col++) {
             board[Config.BOARD_HEIGHT - 1][col] = 1;
         }
@@ -38,8 +38,11 @@ public class Board {
         return board;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return board[0].length;
     }
 
+    public int getHeight() {
+        return board.length;
+    }
 }

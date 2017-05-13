@@ -10,4 +10,5 @@ public class Config {
     public static final int ARC_HEIGHT = 3;
     public static final int BOARD_HEIGHT = 18;
     public static final int BOARD_WIDTH = 10;
+    public static final boolean CLOCK_WISE = true;
 }

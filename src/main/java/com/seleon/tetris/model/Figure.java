@@ -20,7 +20,7 @@ public class Figure {
             {{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 0xf00000}}  // Z
     };
 
-    private ArrayList<Block> blocks;
+    private ArrayList<Block> blocks = new ArrayList<Block>();
     private int[][] shape = new int[HEIGHT][WIDTH];
     private int type, size, color;
 
@@ -42,7 +42,7 @@ public class Figure {
     }
 
     private void createBlocks() {
-        blocks = new ArrayList<Block>();
+        blocks.clear();
         for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 if (shape[row][col] > 0) {
@@ -54,33 +54,11 @@ public class Figure {
 
 
     public void move(int direction) {
-        //if (!isTouchWall(direction)) {
-        // int dx = direction - 38; // LEFT = -1, RIGHT = 1
         int dx = direction; // LEFT = -1, RIGHT = 1
         for (Block block : blocks) {
             block.setX(block.getX() + dx);
         }
         figureX += dx;
-    }
-    //}
-
-//    public void place() {
-//        for (int y = 0; y < shape.length; y++) {
-//            for (int x = 0; x < shape[0].length; x++) {
-//                board.setCellValue(figureY + y, figureX + x, shape[y][x]);
-//            }
-//        }
-//    }
-
-    public int getMaxY() {
-        for (int row = getHeight() - 1; row >= 0; row--) {
-            for (int col = 0; col < getWidth(); col++) {
-                if (shape[row][col] > 0) {
-                    return row;
-                }
-            }
-        }
-        return 0;
     }
 
     public void down() {
@@ -88,6 +66,29 @@ public class Figure {
         for (Block block : blocks) {
             block.incrementY();
         }
+    }
+
+    public void rotate(boolean clockwise) {
+        rotateShape(clockwise);
+        createBlocks();
+    }
+
+    private void rotateShape(boolean clockWise) {
+        for (int i = 0; i < size / 2; i++)
+            for (int j = i; j < size - 1 - i; j++)
+                if (clockWise) {
+                    int tmp = shape[size - 1 - j][i];
+                    shape[size - 1 - j][i] = shape[size - 1 - i][size - 1 - j];
+                    shape[size - 1 - i][size - 1 - j] = shape[j][size - 1 - i];
+                    shape[j][size - 1 - i] = shape[i][j];
+                    shape[i][j] = tmp;
+                } else {
+                    int tmp = shape[i][j];
+                    shape[i][j] = shape[j][size - 1 - i];
+                    shape[j][size - 1 - i] = shape[size - 1 - i][size - 1 - j];
+                    shape[size - 1 - i][size - 1 - j] = shape[size - 1 - j][i];
+                    shape[size - 1 - j][i] = tmp;
+                }
     }
 
     public int[][] getShape() {
@@ -108,14 +109,6 @@ public class Figure {
 
     public void setFigureY(int figureY) {
         this.figureY = figureY;
-    }
-
-    public int getWidth() {
-        return shape.length;
-    }
-
-    public int getHeight() {
-        return shape[0].length;
     }
 
     public ArrayList<Block> getBlocks() {

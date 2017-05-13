@@ -2,6 +2,8 @@ package com.seleon.tetris.model;
 
 import com.seleon.tetris.view.game.GameWindow;
 
+import static com.seleon.tetris.config.Config.CLOCK_WISE;
+
 /**
  * @author Sergey Mikhluk.
  */
@@ -43,6 +45,7 @@ public class Game {
                 moveDown();
                 gameWindow.repaint();
                 System.out.println(i);
+                System.out.println("y " + figure.getFigureY() + ", x " + figure.getFigureX());
             }
 
         }
@@ -50,7 +53,7 @@ public class Game {
 
     private void liveOnTheGround() {
         System.out.println("live it on the ground");
-        for(Block block: figure.getBlocks()){
+        for (Block block : figure.getBlocks()) {
             board.setCellValue(block.getY(), block.getX(), 1);
         }
 
@@ -58,9 +61,9 @@ public class Game {
 
     private boolean isTouchWall(int dx) {
         for (Block block : figure.getBlocks()) {
-            if(dx<0 && block.getX()<=0){
+            if (dx < 0 && block.getX() <= 0) {
                 return true;
-            }else if(dx>0 && block.getX()>= board.getWidth()-1 ){
+            } else if (dx > 0 && block.getX() >= board.getWidth() - 1) {
                 return true;
             }
             if (board.getBoard()[block.getY()][block.getX() + dx] > 0) {
@@ -102,12 +105,42 @@ public class Game {
             figure.move(1);
         } else {
             System.out.println("Touch wall!");
-
         }
     }
 
     public void moveDown() {
         figure.down();
+    }
+
+    public void rotate() {
+        figure.rotate(CLOCK_WISE);
+        if (isWrongPosition()) {
+            System.out.println("wrong position");
+            figure.rotate(!CLOCK_WISE);
+        }
+    }
+
+
+    private boolean isWrongPosition() {
+        for (Block block : figure.getBlocks()) {
+            if (block.getX() < 0 || block.getX() >= board.getWidth() || block.getY() > board.getHeight()) {
+                return true;
+            }
+
+            if (board.getBoard()[block.getY()][block.getX()] > 0) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+
+    public void fall() {
+        while (!isTouchGround()) {
+            moveDown();
+        }
+        liveOnTheGround();
     }
 
     //Getters and setters
@@ -125,12 +158,5 @@ public class Game {
 
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
-    }
-
-    public void fall() {
-        while(!isTouchGround()){
-            moveDown();
-        }
-        liveOnTheGround();
     }
 }
