@@ -111,6 +111,10 @@ public class Figure {
         this.figureY = figureY;
     }
 
+    public int getColor() {
+        return color;
+    }
+
     public ArrayList<Block> getBlocks() {
         return blocks;
     }

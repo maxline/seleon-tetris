@@ -18,7 +18,7 @@ public class BoardPanel extends JPanel {
     private static final int BOARD_PANEL_WIDTH = BOARD_WIDTH * BLOCK_SIZE;
     private static final int BOARD_PANEL_HEIGHT = BOARD_HEIGHT * BLOCK_SIZE;
 
-    BoardPanel() {
+    public BoardPanel() {
         setOpaque(true);
         setFocusable(true);
         setBorder(BorderFactory.createLineBorder(Color.red));
@@ -30,7 +30,6 @@ public class BoardPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        graphics.setColor(Color.WHITE);
         Game game = Game.getInstance(); //todo должно инжектиться?
 
         drawBoard(graphics, game);
@@ -43,6 +42,7 @@ public class BoardPanel extends JPanel {
             return;
         }
 
+        graphics.setColor(new Color(figure.getColor()));
         for (int y = 0; y < figure.getShape().length; y++) {
             for (int x = 0; x < figure.getShape()[0].length; x++) {
                 if (figure.getShape()[y][x] > 0) {
@@ -53,6 +53,7 @@ public class BoardPanel extends JPanel {
     }
 
     private void drawBoard(Graphics graphics, Game game) {
+        graphics.setColor(Color.WHITE);
         Board board = game.getBoard();
 
         for (int y = 0; y < board.getBoard().length; y++) {
