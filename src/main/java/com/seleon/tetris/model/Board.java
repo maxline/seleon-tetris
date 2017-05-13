@@ -38,4 +38,8 @@ public class Board {
         return board;
     }
 
+    public int getWidth(){
+        return board[0].length;
+    }
+
 }

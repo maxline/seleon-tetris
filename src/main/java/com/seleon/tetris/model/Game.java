@@ -53,6 +53,21 @@ public class Game {
 
     }
 
+    private boolean isTouchWall(int dx) {
+        for (Block block : figure.getBlocks()) {
+            if(dx<0 && block.getX()<=0){
+                return true;
+            }else if(dx>0 && block.getX()>= board.getWidth()-1 ){
+                return true;
+            }
+            if (board.getBoard()[block.getY()][block.getX() + dx] > 0) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     private boolean isTouchGround() {
         if (figure.getFigureY() >= board.getBoard().length) {
             return true;
@@ -64,8 +79,6 @@ public class Game {
             }
         }
         //todo для оптимизации проверять только когда фигура уже ниже максимальной по высоте занятой ячейки в шахте
-        //todo все таки добавить arrayList в фигуру которая хранит координаты блоков, вместо постоянного вычисления
-        // нижней правой левой точки путем прохода по всему массиву фигуры
         return false;
     }
 
@@ -74,11 +87,20 @@ public class Game {
     }
 
     public void moveLeft() {
-        figure.move(-1);
+        if (!isTouchWall(-1)) {
+            figure.move(-1);
+        } else {
+            System.out.println("Touch wall!");
+        }
     }
 
     public void moveRight() {
-        figure.move(1);
+        if (!isTouchWall(1)) {
+            figure.move(1);
+        } else {
+            System.out.println("Touch wall!");
+
+        }
     }
 
     public void moveDown() {
