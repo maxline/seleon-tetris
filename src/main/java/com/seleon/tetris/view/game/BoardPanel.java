@@ -2,9 +2,9 @@ package com.seleon.tetris.view.game;
 
 import com.seleon.tetris.controller.KeyListener;
 import com.seleon.tetris.controller.MouseActionListener;
+import com.seleon.tetris.model.Board;
 import com.seleon.tetris.model.Figure;
 import com.seleon.tetris.model.Game;
-import com.seleon.tetris.model.Board;
 
 import javax.swing.*;
 import java.awt.*;

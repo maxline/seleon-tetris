@@ -5,7 +5,7 @@ import com.seleon.tetris.model.Game;
 /**
  * @author Sergey Mikhluk.
  */
-public  interface ICommand {
+public interface ICommand {
     Game game = Game.getInstance();
 
     void execute();

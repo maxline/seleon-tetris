@@ -1,5 +1,6 @@
 package com.seleon.tetris.model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -19,12 +20,12 @@ public class Figure {
             {{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 0xf00000}}  // Z
     };
 
-    private Board board = Board.getInstance();
+    private ArrayList<Block> blocks;
     private int[][] shape = new int[HEIGHT][WIDTH];
     private int type, size, color;
 
     private int figureX = 3; //todo
-    private int figureY = 1;
+    private int figureY = 0;
 
     public Figure() {
         Random random = new Random(); //todo
@@ -34,8 +35,21 @@ public class Figure {
         if (size == 4) {
             //figureY = -1; todo
         }
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             System.arraycopy(SHAPES[type][i], 0, shape[i], 0, SHAPES[type][i].length);
+        }
+        createBlocks();
+    }
+
+    private void createBlocks() {
+        blocks = new ArrayList<Block>();
+        for (int row = 0; row < HEIGHT; row++) {
+            for (int col = 0; col < WIDTH; col++) {
+                if (shape[row][col] > 0) {
+                    blocks.add(new Block(figureY + row, figureX + col));
+                }
+            }
+        }
     }
 
 
@@ -43,7 +57,9 @@ public class Figure {
         //if (!isTouchWall(direction)) {
         // int dx = direction - 38; // LEFT = -1, RIGHT = 1
         int dx = direction; // LEFT = -1, RIGHT = 1
-        //for (Block block : figure) block.setX(block.getX() + dx);
+        for (Block block : blocks) {
+            block.setX(block.getX() + dx);
+        }
         figureX += dx;
     }
     //}
@@ -56,10 +72,10 @@ public class Figure {
 //        }
 //    }
 
-    public int getMaxY(){
-        for(int row = getHeight()-1; row>=0;row--){
-            for(int col = 0; col< getWidth();col++){
-                if (shape[row][col]>0){
+    public int getMaxY() {
+        for (int row = getHeight() - 1; row >= 0; row--) {
+            for (int col = 0; col < getWidth(); col++) {
+                if (shape[row][col] > 0) {
                     return row;
                 }
             }
@@ -69,6 +85,9 @@ public class Figure {
 
     public void down() {
         figureY++;
+        for (Block block : blocks) {
+            block.incrementY();
+        }
     }
 
     public int[][] getShape() {
@@ -97,5 +116,9 @@ public class Figure {
 
     public int getHeight() {
         return shape[0].length;
+    }
+
+    public ArrayList<Block> getBlocks() {
+        return blocks;
     }
 }

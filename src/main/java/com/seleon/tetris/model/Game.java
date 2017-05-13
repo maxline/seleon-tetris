@@ -57,21 +57,15 @@ public class Game {
         if (figure.getFigureY() >= board.getBoard().length) {
             return true;
         }
+
+        for (Block block : figure.getBlocks()) {
+            if (board.getBoard()[block.getY() + 1][block.getX()] > 0) {
+                return true;
+            }
+        }
         //todo для оптимизации проверять только когда фигура уже ниже максимальной по высоте занятой ячейки в шахте
         //todo все таки добавить arrayList в фигуру которая хранит координаты блоков, вместо постоянного вычисления
         // нижней правой левой точки путем прохода по всему массиву фигуры
-        int startX = figure.getFigureX();
-        int startY = figure.getFigureY();
-        int sizeY = figure.getMaxY();
-        int sizeX = figure.getWidth();
-        for (int row = sizeY; row >=0; row--) {
-            for (int col = 0; col < sizeX; col++) {
-                if (board.getBoard()[row + startY+1][col + startX] +
-                        figure.getShape()[row][col] > 1) {
-                    return true;
-                }
-            }
-        }
         return false;
     }
 
