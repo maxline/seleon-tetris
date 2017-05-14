@@ -3,10 +3,9 @@ package com.seleon.tetris.controller.command;
 /**
  * @author Sergey Mikhluk.
  */
-public class FallCommand implements ICommand {
+public class QuitCommand implements ICommand {
 
     public void execute() {
-        //game.go();//todo
-        game.fallQuick();
+        game.quit();
     }
 }

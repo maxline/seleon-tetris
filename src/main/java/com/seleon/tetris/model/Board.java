@@ -30,7 +30,6 @@ public class Board {
     }
 
     public void setCellValue(int cellY, int cellX, int value) {
-        System.out.println("y=" + cellY + ", x=" + cellX);
         board[cellY][cellX] = value;
     }
 

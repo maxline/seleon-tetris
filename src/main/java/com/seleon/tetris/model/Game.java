@@ -9,13 +9,16 @@ import static com.seleon.tetris.config.Config.SCORES;
  * @author Sergey Mikhluk.
  */
 public class Game {
-    public static int FIGURE_Y = 0;
-    private static Game instance;
+
     private final int SHOW_DELAY = 1000; // delay for animation
+
+    private static volatile Game instance;
     private Board board;
     private Figure figure;
     private GameWindow gameWindow;
-    private boolean gameOver = false;
+
+    private boolean isGameOver = false;
+
     private int gameScore;
 
     private Game() {
@@ -24,57 +27,62 @@ public class Game {
     }
 
     public static Game getInstance() {
-        if (instance == null) {
-            instance = new Game();
+        Game localInstance = instance;
+        if (localInstance == null) {
+            synchronized (Game.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new Game();
+                }
+            }
         }
-        return instance;
+        return localInstance;
     }
 
-
     public void go() {
-        for (int i = 0; i < 25; i++) {
-            figure = new Figure();
-            while (!gameOver) {
+        while (!isGameOver) {
+
+            try {
+                Thread.sleep(SHOW_DELAY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (isTouchGround()) {
+                leaveOnTheGround();
                 checkFilling();
-                try {
-                    Thread.sleep(SHOW_DELAY);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+
+                figure = new Figure();
+                if (isCrossGround()) {
+                    isGameOver = true;
                 }
-                if (isTouchGround()) {
-                    leaveOnTheGround();
-                    break;
-                }
+            } else {
                 moveDown();
-                gameWindow.repaint();
-                System.out.println(i);
-                System.out.println("y " + figure.getFigureY() + ", x " + figure.getFigureX());
             }
 
+            gameWindow.repaint();
+            System.out.println("y " + figure.getFigureY() + ", x " + figure.getFigureX());
         }
+        System.out.println("Game over!");
+    }
+
+    public void moveDown() {
+        if (!isTouchGround()) {
+            figure.down();
+        }
+    }
+
+    public void fallQuick() {
+        while (!isTouchGround()) {
+            moveDown();
+        }
+        leaveOnTheGround();
     }
 
     private void leaveOnTheGround() {
-        System.out.println("live it on the ground");
+        System.out.println("leave it on the ground");
         for (Block block : figure.getBlocks()) {
             board.setCellValue(block.getY(), block.getX(), 1);
         }
-
-    }
-
-    private boolean isTouchWall(int dx) {
-        for (Block block : figure.getBlocks()) {
-            if (dx < 0 && block.getX() <= 0) {
-                return true;
-            } else if (dx > 0 && block.getX() >= board.getWidth() - 1) {
-                return true;
-            }
-            if (board.getBoard()[block.getY()][block.getX() + dx] > 0) {
-                return true;
-            }
-        }
-        return false;
-
     }
 
     private boolean isTouchGround() {
@@ -87,12 +95,17 @@ public class Game {
                 return true;
             }
         }
-        //todo для оптимизации проверять только когда фигура уже ниже максимальной по высоте занятой ячейки в шахте
+
         return false;
     }
 
-    private boolean isCellYXTouched() {
-        return false; //todo
+    private boolean isCrossGround() {
+        for (Block block : figure.getBlocks()) {
+            if (board.getBoard()[block.getY()][block.getX()] > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void moveLeft() {
@@ -111,8 +124,18 @@ public class Game {
         }
     }
 
-    public void moveDown() {
-        figure.down();
+    private boolean isTouchWall(int dx) {
+        for (Block block : figure.getBlocks()) {
+            if (dx < 0 && block.getX() <= 0) {
+                return true;
+            } else if (dx > 0 && block.getX() >= board.getWidth() - 1) {
+                return true;
+            }
+            if (board.getBoard()[block.getY()][block.getX() + dx] > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void rotate() {
@@ -123,7 +146,6 @@ public class Game {
         }
     }
 
-
     private boolean isWrongPosition() {
         for (Block block : figure.getBlocks()) {
             if (block.getX() < 0 || block.getX() >= board.getWidth() || block.getY() > board.getHeight()) {
@@ -133,19 +155,11 @@ public class Game {
             if (board.getBoard()[block.getY()][block.getX()] > 0) {
                 return true;
             }
-
         }
         return false;
     }
 
-
-    public void fall() {
-        while (!isTouchGround()) {
-            moveDown();
-        }
-        leaveOnTheGround();
-    }
-    void checkFilling() { // check filling rows
+    void checkFilling() {
         int row = board.getHeight() - 2; //todo -1
         int countFillRows = 0;
         while (row > 0) {
@@ -154,7 +168,8 @@ public class Game {
                 filled *= Integer.signum(board.getBoard()[row][col]);
             if (filled > 0) {
                 countFillRows++;
-                for (int i = row; i > 0; i--) System.arraycopy(board.getBoard()[i-1], 0, board.getBoard()[i], 0, board.getWidth());
+                for (int i = row; i > 0; i--)
+                    System.arraycopy(board.getBoard()[i - 1], 0, board.getBoard()[i], 0, board.getWidth());
             } else
                 row--;
         }
@@ -162,6 +177,10 @@ public class Game {
             gameScore += SCORES[countFillRows - 1];
             System.out.println(gameScore);
         }
+    }
+
+    public void quit() {
+        isGameOver = true;
     }
 
     //Getters and setters
