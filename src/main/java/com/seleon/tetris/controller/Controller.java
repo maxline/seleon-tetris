@@ -1,6 +1,7 @@
 package com.seleon.tetris.controller;
 
 import com.seleon.tetris.controller.command.*;
+import com.seleon.tetris.model.Game;
 import com.seleon.tetris.view.game.GameWindow;
 
 import java.awt.event.KeyEvent;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 public class Controller {
 
     private final HashMap<Integer, ICommand> commands = new HashMap<Integer, ICommand>();
+    private ICommand missingCommand = new MissingCommand();
 
     public Controller(GameWindow gameWindow) {
         commands.put(KeyEvent.VK_LEFT, new LeftCommand());
@@ -20,6 +22,7 @@ public class Controller {
         commands.put(KeyEvent.VK_SPACE, new FallCommand());
         commands.put(KeyEvent.VK_UP, new RotateCommand());
         commands.put(KeyEvent.VK_Q, new QuitCommand());
+        commands.put(KeyEvent.VK_P, new PauseCommand());
 
         initListeners(gameWindow);
     }
@@ -33,8 +36,13 @@ public class Controller {
         ICommand command = commands.get(keyEvent);
 
         if (command == null) {
-            command = new MissingCommand();
+            command = missingCommand;
         }
+
+        if (Game.getInstance().isPause() && !(command instanceof PauseCommand || command instanceof QuitCommand)){
+            command = missingCommand;
+        }
+
         return command;
     }
 }

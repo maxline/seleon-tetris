@@ -18,6 +18,7 @@ public class Game {
     private GameWindow gameWindow;
 
     private boolean isGameOver = false;
+    private boolean isPause = false;
 
     private int gameScore;
 
@@ -47,20 +48,22 @@ public class Game {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (isTouchGround()) {
-                leaveOnTheGround();
-                checkFilling();
+            if (!isPause) {
+                if (isTouchGround()) {
+                    leaveOnTheGround();
+                    checkFilling();
 
-                figure = new Figure();
-                if (isCrossGround()) {
-                    isGameOver = true;
+                    figure = new Figure();
+                    if (isCrossGround()) {
+                        isGameOver = true;
+                    }
+                } else {
+                    moveDown();
                 }
-            } else {
-                moveDown();
-            }
 
-            gameWindow.repaint();
-            System.out.println("y " + figure.getFigureY() + ", x " + figure.getFigureX());
+                gameWindow.repaint();
+                System.out.println("y " + figure.getFigureY() + ", x " + figure.getFigureX());
+            }
         }
         System.out.println("Game over!");
     }
@@ -179,6 +182,10 @@ public class Game {
         }
     }
 
+    public void pause() {
+        isPause = !isPause;
+    }
+
     public void quit() {
         isGameOver = true;
     }
@@ -198,5 +205,9 @@ public class Game {
 
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
+    }
+
+    public boolean isPause() {
+        return isPause;
     }
 }
