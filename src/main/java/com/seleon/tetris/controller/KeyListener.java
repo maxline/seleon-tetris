@@ -19,7 +19,7 @@ public class KeyListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        controller.getCommand(e.getKeyCode()).execute();
+        controller.getCommand(String.valueOf(e.getKeyCode())).execute();
         windowRepaint();
     }
 

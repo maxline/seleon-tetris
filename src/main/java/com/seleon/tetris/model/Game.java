@@ -182,6 +182,15 @@ public class Game {
         }
     }
 
+    public void start() {
+        System.out.println("start new game!"); //todo
+
+    }
+
+    public void level() {
+        System.out.println("set difficulty level!"); //todo
+    }
+
     public void pause() {
         isPause = !isPause;
     }

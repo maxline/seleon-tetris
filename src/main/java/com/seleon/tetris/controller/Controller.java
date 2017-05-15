@@ -12,17 +12,23 @@ import java.util.HashMap;
  */
 public class Controller {
 
-    private final HashMap<Integer, ICommand> commands = new HashMap<Integer, ICommand>();
+    private final HashMap<String, ICommand> commands = new HashMap<>();
     private ICommand missingCommand = new MissingCommand();
 
     public Controller(GameWindow gameWindow) {
-        commands.put(KeyEvent.VK_LEFT, new LeftCommand());
-        commands.put(KeyEvent.VK_RIGHT, new RightCommand());
-        commands.put(KeyEvent.VK_DOWN, new DownCommand());
-        commands.put(KeyEvent.VK_SPACE, new FallCommand());
-        commands.put(KeyEvent.VK_UP, new RotateCommand());
-        commands.put(KeyEvent.VK_Q, new QuitCommand());
-        commands.put(KeyEvent.VK_P, new PauseCommand());
+        commands.put(String.valueOf(KeyEvent.VK_LEFT), new LeftCommand());
+        commands.put(String.valueOf(KeyEvent.VK_RIGHT), new RightCommand());
+        commands.put(String.valueOf(KeyEvent.VK_DOWN), new DownCommand());
+        commands.put(String.valueOf(KeyEvent.VK_SPACE), new FallCommand());
+        commands.put(String.valueOf(KeyEvent.VK_UP), new RotateCommand());
+
+        commands.put(String.valueOf(KeyEvent.VK_Q), new QuitCommand());
+        commands.put(String.valueOf(KeyEvent.VK_P), new PauseCommand());
+        commands.put(String.valueOf(KeyEvent.VK_X), new ExitCommand());
+
+        commands.put(GameWindow.MENU_START, new StartCommand());
+        commands.put(GameWindow.MENU_LEVEL, new LevelCommand());
+        commands.put(GameWindow.MENU_EXIT, new ExitCommand());
 
         initListeners(gameWindow);
     }
@@ -30,10 +36,12 @@ public class Controller {
     public void initListeners(GameWindow gameWindow) {
         gameWindow.getBoardPanel().addBoardMouseListener(new MouseActionListener(gameWindow, this));
         gameWindow.getBoardPanel().addBoardKeyListener(new KeyListener(gameWindow, this));
+
+        gameWindow.addMenuActionListener(new MenuActionListener(this));
     }
 
-    public ICommand getCommand(Integer keyEvent) {
-        ICommand command = commands.get(keyEvent);
+    public ICommand getCommand(String eventCommand) {
+        ICommand command = commands.get(String.valueOf(eventCommand));
 
         if (command == null) {
             command = missingCommand;
