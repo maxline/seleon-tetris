@@ -84,7 +84,7 @@ public class Game {
     private void leaveOnTheGround() {
         System.out.println("leave it on the ground");
         for (Block block : figure.getBlocks()) {
-            board.setCellValue(block.getY(), block.getX(), 1);
+            board.setCellValue(block.getY(), block.getX(), figure.getColor());
         }
     }
 

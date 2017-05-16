@@ -7,18 +7,19 @@ import com.seleon.tetris.config.Config;
  */
 public class Board {
 
+    public static final int COLOR_WHITE = 0xffffff;
     private static Board instance;
 
     private int[][] board = new int[Config.BOARD_HEIGHT][Config.BOARD_WIDTH];
 
     private Board() {
 //        board[0][0] = 1; //todo
-        board[5][1] = 1;
-        board[6][1] = 1;
-        board[14][8] = 1;
-        board[13][4] = 1;
+        board[5][1] = COLOR_WHITE;
+        board[6][1] = COLOR_WHITE;
+        board[14][8] = COLOR_WHITE;
+        board[13][4] = COLOR_WHITE;
         for (int col = 0; col < Config.BOARD_WIDTH; col++) {
-            board[Config.BOARD_HEIGHT - 1][col] = 1;
+            board[Config.BOARD_HEIGHT - 1][col] = COLOR_WHITE;
         }
     }
 

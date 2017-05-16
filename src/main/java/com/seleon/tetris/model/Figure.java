@@ -20,7 +20,7 @@ public class Figure {
             {{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 0xf00000}}  // Z
     };
 
-    private ArrayList<Block> blocks = new ArrayList<Block>();
+    private ArrayList<Block> blocks = new ArrayList<>();
     private int[][] shape = new int[HEIGHT][WIDTH];
     private int type, size, color;
 

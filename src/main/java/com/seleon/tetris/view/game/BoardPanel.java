@@ -53,12 +53,12 @@ public class BoardPanel extends JPanel {
     }
 
     private void drawBoard(Graphics graphics, Game game) {
-        graphics.setColor(Color.WHITE);
         Board board = game.getBoard();
 
         for (int y = 0; y < board.getBoard().length; y++) {
             for (int x = 0; x < board.getBoard()[0].length; x++) {
                 if (board.getBoard()[y][x] > 0) {
+                    graphics.setColor(new Color(board.getBoard()[y][x]));
                     graphics.drawRoundRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1, ARC_WIDTH, ARC_HEIGHT);
                 }
             }

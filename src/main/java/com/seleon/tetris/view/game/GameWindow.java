@@ -13,7 +13,7 @@ import static com.seleon.tetris.config.Config.*;
  */
 public class GameWindow extends JFrame {
     private static final int MAIN_WINDOW_WIDTH = BOARD_WIDTH * BLOCK_SIZE + 8;
-    private static final int MAIN_WINDOW_HEIGHT = BOARD_HEIGHT * BLOCK_SIZE + 30;
+    private static final int MAIN_WINDOW_HEIGHT = BOARD_HEIGHT * BLOCK_SIZE + 50;
     public static final String MENU_HELP = "Help";
     public static final String MENU_EXIT = "Exit";
     public static final String MENU_LEVEL = "Level";
