@@ -25,6 +25,7 @@ public class Controller {
         commands.put(String.valueOf(KeyEvent.VK_Q), new QuitCommand());
         commands.put(String.valueOf(KeyEvent.VK_P), new PauseCommand());
         commands.put(String.valueOf(KeyEvent.VK_X), new ExitCommand());
+        commands.put(String.valueOf(KeyEvent.VK_S), new StartCommand());
 
         commands.put(GameWindow.MENU_START, new StartCommand());
         commands.put(GameWindow.MENU_LEVEL, new LevelCommand());
@@ -47,7 +48,11 @@ public class Controller {
             command = missingCommand;
         }
 
-        if (Game.getInstance().isPause() && !(command instanceof PauseCommand || command instanceof QuitCommand)){
+        if (Game.getInstance().isPause() &&
+                !(command instanceof PauseCommand ||
+                        command instanceof QuitCommand ||
+                        command instanceof StartCommand
+                )){
             command = missingCommand;
         }
 

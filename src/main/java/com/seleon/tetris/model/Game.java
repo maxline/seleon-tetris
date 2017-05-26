@@ -8,23 +8,21 @@ import static com.seleon.tetris.config.Config.SCORES;
 /**
  * @author Sergey Mikhluk.
  */
-public class Game {
+public class Game implements Runnable {
 
-    private final int SHOW_DELAY = 1000; // delay for animation
-
+    private final int SHOW_DELAY = 500;
     private static volatile Game instance;
+
     private Board board;
     private Figure figure;
     private GameWindow gameWindow;
 
-    private boolean isGameOver = false;
+    private boolean isGameOver = true;
     private boolean isPause = false;
-
-    private int gameScore;
+    private int score;
 
     private Game() {
         board = Board.getInstance(); //todo переписать через dependency injection в конструкторе
-        figure = new Figure();//// TODO: 12.05.2017
     }
 
     public static Game getInstance() {
@@ -40,9 +38,18 @@ public class Game {
         return localInstance;
     }
 
-    public void go() {
-        while (!isGameOver) {
+    @Override
+    public void run() {
+        if (isGameOver) {
+            go();
+        } else {
+            reset();
+        }
+    }
 
+    public void go() {
+        reset();
+        while (!isGameOver) {
             try {
                 Thread.sleep(SHOW_DELAY);
             } catch (InterruptedException e) {
@@ -66,6 +73,15 @@ public class Game {
             }
         }
         System.out.println("Game over!");
+    }
+
+    private void reset() {
+        score = 0;
+        isGameOver = false;
+        isPause = false;
+        figure = new Figure();
+        board.reset();
+        gameWindow.repaint();
     }
 
     public void moveDown() {
@@ -177,14 +193,9 @@ public class Game {
                 row--;
         }
         if (countFillRows > 0) {
-            gameScore += SCORES[countFillRows - 1];
-            System.out.println(gameScore);
+            score += SCORES[countFillRows - 1];
+            System.out.println(score);
         }
-    }
-
-    public void start() {
-        System.out.println("start new game!"); //todo
-
     }
 
     public void level() {

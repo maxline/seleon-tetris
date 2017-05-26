@@ -36,7 +36,7 @@ public class GameWindow extends JFrame {
     }
 
     private void createMenu()  {
-        mainMenu = new JMenu("Menu");
+        mainMenu = new JMenu("Menu"); //todo string constants
 
         JMenuItem menuStart = new JMenuItem(MENU_START);
         menuStart.setActionCommand(MENU_START);
@@ -77,10 +77,6 @@ public class GameWindow extends JFrame {
         setVisible(true);
     }
 
-    public BoardPanel getBoardPanel() {
-        return boardPanel;
-    }
-
     public void addMenuActionListener(MenuActionListener menuActionListener) {
         addMenuItemActionListener(menuActionListener, mainMenu);
         //addMenuItemActionListener(menuActionListener, fileMenu); todo
@@ -93,5 +89,16 @@ public class GameWindow extends JFrame {
                 menu.getItem(i).addActionListener(menuActionListener);
             }
         }
+    }
+
+    //getters and setters
+    public BoardPanel getBoardPanel() {
+        return boardPanel;
+    }
+
+    @Override //todo to delete after debug
+    public void repaint(long time, int x, int y, int width, int height) {
+        System.out.println("ffffffffffff");
+        super.repaint(time, x, y, width, height);
     }
 }

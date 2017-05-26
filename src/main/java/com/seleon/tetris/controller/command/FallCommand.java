@@ -6,7 +6,6 @@ package com.seleon.tetris.controller.command;
 public class FallCommand implements ICommand {
 
     public void execute() {
-        //game.go();//todo
         game.fallQuick();
     }
 }

@@ -10,10 +10,15 @@ public class Board {
     public static final int COLOR_WHITE = 0xffffff;
     private static Board instance;
 
-    private int[][] board = new int[Config.BOARD_HEIGHT][Config.BOARD_WIDTH];
+    private int[][] board;
 
     private Board() {
-//        board[0][0] = 1; //todo
+        reset();
+    }
+
+    public void reset() {
+        board = new int[Config.BOARD_HEIGHT][Config.BOARD_WIDTH];
+        //        board[0][0] = 1; //todo
         board[5][1] = COLOR_WHITE;
         board[6][1] = COLOR_WHITE;
         board[14][8] = COLOR_WHITE;

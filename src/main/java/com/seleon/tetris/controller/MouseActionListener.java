@@ -21,7 +21,7 @@ public class MouseActionListener extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         Game game = Game.getInstance();
-        //game.onClick(e.getPoint());
+        //game.onClick(e.getPoint()); //todo
         windowRepaint();
     }
 
