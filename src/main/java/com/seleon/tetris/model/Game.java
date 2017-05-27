@@ -2,6 +2,8 @@ package com.seleon.tetris.model;
 
 import com.seleon.tetris.view.game.GameWindow;
 
+import java.util.Objects;
+
 import static com.seleon.tetris.config.Config.CLOCK_WISE;
 import static com.seleon.tetris.config.Config.SCORES;
 
@@ -10,7 +12,11 @@ import static com.seleon.tetris.config.Config.SCORES;
  */
 public class Game implements Runnable {
 
-    private final int SHOW_DELAY = 40;
+    private static final String STATUS_GAME_OVER = "Game over!";
+    private static final String STATUS_PAUSED = "Paused";
+    private static final String STATUS_TOUCH_WALL = "Touch wall!";
+    private static final String STATUS_WRONG_POSITION = "Wrong position!";
+    private final int SHOW_DELAY = 80;
     private final int MAX_LEVEL = 10;
     private static volatile Game instance;
 
@@ -22,6 +28,7 @@ public class Game implements Runnable {
     private boolean isPause = false;
     private int score;
     private int level;
+    private String statusMessage;
 
     private Game() {
         board = Board.getInstance(); //todo переписать через dependency injection в конструкторе
@@ -57,24 +64,29 @@ public class Game implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             if (!isPause) {
+                statusMessage = "";
                 if (isTouchGround()) {
                     leaveOnTheGround();
                     checkFilling();
 
                     figure = new Figure();
                     if (isCrossGround()) {
+                        statusMessage = STATUS_GAME_OVER;
                         isGameOver = true;
                     }
                 } else {
                     moveDown();
                 }
 
+                if (Objects.equals(statusMessage, "")) {
+                    statusMessage = "y " + figure.getFigureY() + ", x " + figure.getFigureX();
+                }
                 gameWindow.repaint();
-                System.out.println("y " + figure.getFigureY() + ", x " + figure.getFigureX());
             }
         }
-        System.out.println("Game over!");
+        statusMessage = STATUS_GAME_OVER;
     }
 
     private void reset() {
@@ -82,6 +94,7 @@ public class Game implements Runnable {
         level = 0;
         isGameOver = false;
         isPause = false;
+        statusMessage = "";
         figure = new Figure();
         board.reset();
         gameWindow.repaint();
@@ -105,6 +118,7 @@ public class Game implements Runnable {
     }
 
     private void leaveOnTheGround() {
+        statusMessage = "Leave it on the ground";
         System.out.println("leave it on the ground");
         for (Block block : figure.getBlocks()) {
             board.setCellValue(block.getY(), block.getX(), figure.getColor());
@@ -138,7 +152,7 @@ public class Game implements Runnable {
         if (!isTouchWall(-1)) {
             figure.move(-1);
         } else {
-            System.out.println("Touch wall!");
+            statusMessage = STATUS_TOUCH_WALL;
         }
     }
 
@@ -146,7 +160,7 @@ public class Game implements Runnable {
         if (!isTouchWall(1)) {
             figure.move(1);
         } else {
-            System.out.println("Touch wall!");
+            statusMessage = STATUS_TOUCH_WALL;
         }
     }
 
@@ -167,7 +181,7 @@ public class Game implements Runnable {
     public void rotate() {
         figure.rotate(CLOCK_WISE);
         if (isWrongPosition()) {
-            System.out.println("wrong position");
+            statusMessage = STATUS_WRONG_POSITION;
             figure.rotate(!CLOCK_WISE);
         }
     }
@@ -201,21 +215,24 @@ public class Game implements Runnable {
         }
         if (countFillRows > 0) {
             score += SCORES[countFillRows - 1];
-            System.out.println(score);
         }
     }
 
     public void increaseLevel() {
-        if (level < MAX_LEVEL-1) {
+        if (level < MAX_LEVEL - 1) {
             level++;
         }
     }
 
     public void pause() {
         isPause = !isPause;
+        if (isPause) {
+            statusMessage = STATUS_PAUSED;
+        }
     }
 
     public void quit() {
+        statusMessage = STATUS_GAME_OVER;
         isGameOver = true;
     }
 
@@ -242,6 +259,10 @@ public class Game implements Runnable {
 
     public int getLevel() {
         return level;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
     }
 
     public boolean isPause() {

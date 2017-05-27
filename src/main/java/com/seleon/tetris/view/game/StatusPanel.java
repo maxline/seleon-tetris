@@ -17,6 +17,7 @@ public class StatusPanel extends JPanel {
 
     private JLabel scoreLabel;
     private JLabel levelLabel;
+    private JLabel statusLabel;
 
     public StatusPanel() {
         setLayout(new GridLayout(16, 1));
@@ -34,6 +35,10 @@ public class StatusPanel extends JPanel {
         levelLabel = createLabel("");
         add(createLabel("Level"));
         add(levelLabel);
+
+        statusLabel = createLabel("");
+        add(createLabel("Status"));
+        add(statusLabel);
     }
 
     private JLabel createLabel(String caption) {
@@ -48,14 +53,18 @@ public class StatusPanel extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         drawScore();
-        drawLabel();
+        drawLevel();
+        drawStatus();
     }
 
     private void drawScore() {
         scoreLabel.setText(String.valueOf(Game.getInstance().getScore()));
     }
 
-    private void drawLabel() {
+    private void drawLevel() {
         levelLabel.setText(String.valueOf(Game.getInstance().getLevel()));
+    }
+    private void drawStatus() {
+        statusLabel.setText(String.valueOf(Game.getInstance().getStatusMessage()));
     }
 }
