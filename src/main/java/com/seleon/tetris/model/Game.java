@@ -20,6 +20,7 @@ public class Game implements Runnable {
     private boolean isGameOver = true;
     private boolean isPause = false;
     private int score;
+    private int level;
 
     private Game() {
         board = Board.getInstance(); //todo переписать через dependency injection в конструкторе
@@ -77,6 +78,7 @@ public class Game implements Runnable {
 
     private void reset() {
         score = 0;
+        level = 0;
         isGameOver = false;
         isPause = false;
         figure = new Figure();
@@ -225,6 +227,14 @@ public class Game implements Runnable {
 
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public boolean isPause() {
