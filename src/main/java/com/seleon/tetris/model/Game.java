@@ -10,7 +10,8 @@ import static com.seleon.tetris.config.Config.SCORES;
  */
 public class Game implements Runnable {
 
-    private final int SHOW_DELAY = 500;
+    private final int SHOW_DELAY = 40;
+    private final int MAX_LEVEL = 10;
     private static volatile Game instance;
 
     private Board board;
@@ -52,7 +53,7 @@ public class Game implements Runnable {
         reset();
         while (!isGameOver) {
             try {
-                Thread.sleep(SHOW_DELAY);
+                Thread.sleep(getStepDelay());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -84,6 +85,10 @@ public class Game implements Runnable {
         figure = new Figure();
         board.reset();
         gameWindow.repaint();
+    }
+
+    private int getStepDelay() {
+        return (MAX_LEVEL - level) * SHOW_DELAY;
     }
 
     public void moveDown() {
@@ -200,8 +205,10 @@ public class Game implements Runnable {
         }
     }
 
-    public void level() {
-        System.out.println("set difficulty level!"); //todo
+    public void increaseLevel() {
+        if (level < MAX_LEVEL-1) {
+            level++;
+        }
     }
 
     public void pause() {

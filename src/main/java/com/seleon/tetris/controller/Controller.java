@@ -26,6 +26,7 @@ public class Controller {
         commands.put(String.valueOf(KeyEvent.VK_P), new PauseCommand());
         commands.put(String.valueOf(KeyEvent.VK_X), new ExitCommand());
         commands.put(String.valueOf(KeyEvent.VK_S), new StartCommand());
+        commands.put(String.valueOf(KeyEvent.VK_L), new LevelCommand());
 
         commands.put(GameWindow.MENU_START, new StartCommand());
         commands.put(GameWindow.MENU_LEVEL, new LevelCommand());

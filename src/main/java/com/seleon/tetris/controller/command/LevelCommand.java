@@ -6,6 +6,6 @@ package com.seleon.tetris.controller.command;
 public class LevelCommand implements ICommand {
 
     public void execute() {
-        game.level();
+        game.increaseLevel();
     }
 }
